@@ -20,7 +20,10 @@ router.post("/", function(req, res) {
     //const domain = payload['hd'];
   }
   verify()
-    .then(res => res.send("login"))
+    .then(result => {
+      console.log(result);
+      res.send("login");
+    })
     .catch(err => {
       console.log(err);
       res.send("error");
