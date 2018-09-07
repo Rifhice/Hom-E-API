@@ -34,7 +34,7 @@ router.post("/Google", function(req, res) {
         DB.createUser({ googleId: userId })
           .then(id => {
             jwt
-              .code({ userId })
+              .code({ userId: userid })
               .then(token =>
                 res.send({
                   code: 202,
