@@ -24,7 +24,7 @@ var createUser = user => {
 
 var readUsers = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile("./DB.json", JSON.stringify(user), (err, data) => {
+    fs.readFile("./DB.json", (err, data) => {
       if (err) reject(err);
       else resolve(data);
     });
