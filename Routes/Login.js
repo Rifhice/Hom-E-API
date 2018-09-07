@@ -4,14 +4,7 @@ const { OAuth2Client } = require("google-auth-library");
 const DB = require("./DB.js");
 const jwt = require("./JWT.js");
 
-const createTokenAndRespond = (json, res) => {
-  jwt
-    .code(json)
-    .then(token =>
-      res.send({ code: 202, message: "Connection succeeded !", token })
-    )
-    .catch(err => console.log(err));
-};
+const createTokenAndRespond = (json, res) => {};
 
 router.post("/Google", function(req, res) {
   let token = req.body.token;
@@ -29,13 +22,27 @@ router.post("/Google", function(req, res) {
     DB.getUserWithGoogleID(userid)
       .then(result => {
         console.log(result);
-        createTokenAndRespond({ userId: result.userId }, res);
+        jwt
+          .code({ userId: result.userId })
+          .then(token =>
+            res.send({ code: 202, message: "Connection succeeded !", token })
+          )
+          .catch(err => console.log(err));
       })
       .catch(err => {
         console.log(err);
         DB.createUser({ googleId: userId })
           .then(userId => {
-            createTokenAndRespond({ userId: userId }, res);
+            jwt
+              .code({ userId: userId })
+              .then(token =>
+                res.send({
+                  code: 202,
+                  message: "New user created !",
+                  token
+                })
+              )
+              .catch(err => console.log(err));
           })
           .catch(err =>
             res.send({

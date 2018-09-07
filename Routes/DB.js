@@ -11,22 +11,24 @@ function guid() {
 
 var createUser = user => {
   return new Promise((resolve, reject) => {
-    readUsers().then(data => {
-      const uuid = guid();
-      data[uuid] = user;
-      fs.writeFile("./DB.json", JSON.stringify(data), err => {
-        if (err) reject(err);
-        else resolve(uuid);
-      });
-    });
+    readUsers()
+      .then(data => {
+        const uuid = guid();
+        data[uuid] = user;
+        fs.writeFile("./Routes/DB.json", JSON.stringify(data), err => {
+          if (err) reject(err);
+          else resolve(uuid);
+        });
+      })
+      .catch(err => console.log(err));
   });
 };
 
 var readUsers = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile("./DB.json", (err, data) => {
+    fs.readFile("./Routes/DB.json", (err, data) => {
       if (err) reject(err);
-      else resolve(data);
+      else resolve(require("./DB.json"));
     });
   });
 };
@@ -58,8 +60,7 @@ var doesUserExists = userId => {
       .catch(err => console.log(err));
   });
 };
-createUser({ googleId: "105798007328638690051", faceboookId: "id" });
-createUser({ googleId: "id", faceboookId: "id" });
+
 module.exports = {
   getUserWithGoogleID,
   doesUserExists,
