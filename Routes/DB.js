@@ -1,6 +1,3 @@
-import { resolve } from "dns";
-import { rejects } from "assert";
-
 var db = {
   "1": { googleId: "105798007328638690051", faceboookId: "id" },
   "2": { googleId: "id", faceboookId: "id" }
