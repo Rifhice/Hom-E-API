@@ -32,9 +32,9 @@ router.post("/Google", function(req, res) {
       .catch(err => {
         console.log(err);
         DB.createUser({ googleId: userId })
-          .then(userId => {
+          .then(id => {
             jwt
-              .code({ userId: userId })
+              .code({ userId: id })
               .then(token =>
                 res.send({
                   code: 202,
