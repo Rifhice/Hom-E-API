@@ -31,10 +31,10 @@ router.post("/Google", function(req, res) {
       })
       .catch(err => {
         console.log(err);
-        DB.createUser({ googleId: userId })
+        DB.createUser({ googleId: userid })
           .then(id => {
             jwt
-              .code({ userId: userid })
+              .code({ userId: id })
               .then(token =>
                 res.send({
                   code: 202,
