@@ -2,7 +2,7 @@ var express = require("express");
 const router = express.Router();
 const { OAuth2Client } = require("google-auth-library");
 const DB = require("./DB.js");
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const SECRET_HASH = "M3rC13STTr0pfUn";
 
