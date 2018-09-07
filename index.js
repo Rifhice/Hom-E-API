@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 const Logger = require("./Logger");
 const cfg = require("./config.json");
-const REST_PORT = cfg.REST_PORT;
+const REST_PORT = process.env.PORT || cfg.REST_PORT;
 const SOCKET_IO_PORT = cfg.SOCKET_IO_PORT;
 
 app.get("/", function(req, res) {
