@@ -33,25 +33,29 @@ var readUsers = () => {
 
 var getUserWithGoogleID = userId => {
   return new Promise((resolve, reject) => {
-    readUsers().then(users => {
-      for (user in users) {
-        if (users[user].googleId === userId) {
-          let res = { ...users[user] };
-          res.userId = user;
-          resolve(res);
+    readUsers()
+      .then(users => {
+        for (user in users) {
+          if (users[user].googleId === userId) {
+            let res = { ...users[user] };
+            res.userId = user;
+            resolve(res);
+          }
         }
-      }
-      reject();
-    });
+        reject();
+      })
+      .catch(err => console.log(err));
   });
 };
 
 var doesUserExists = userId => {
   return new Promise((resolve, reject) => {
-    readUsers().then(users => {
-      if (users[userId]) resolve();
-      else reject();
-    });
+    readUsers()
+      .then(users => {
+        if (users[userId]) resolve();
+        else reject();
+      })
+      .catch(err => console.log(err));
   });
 };
 createUser({ googleId: "105798007328638690051", faceboookId: "id" });
