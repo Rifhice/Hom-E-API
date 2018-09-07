@@ -16,4 +16,11 @@ var getUserWithGoogleID = userId => {
   });
 };
 
-module.exports = { getUserWithGoogleID };
+var doesUserExists = userId => {
+  return new Promise((resolve, reject) => {
+    if (db[userId]) resolve();
+    else reject();
+  });
+};
+
+module.exports = { getUserWithGoogleID, doesUserExists };

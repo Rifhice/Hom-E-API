@@ -10,10 +10,12 @@ router.get("/", function(req, res) {
 router.get("/:id", function(req, res) {});
 
 router.post("/", function(req, res) {
-  Authentificator.checkAut(false, res).then(result => {
-    console.log(RequestFormatter.format(req));
-    res.send("Actuator");
-  });
+  Authentificator.checkAut(req.body.token, res)
+    .then(result => {
+      console.log(RequestFormatter.format(req));
+      res.send("Actuator");
+    })
+    .catch(err => console.log(err));
 });
 
 router.delete("/:id", function(req, res) {});

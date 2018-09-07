@@ -1,10 +1,8 @@
 var express = require("express");
-const jwt = require("../node_modules/jsonwebtoken");
 const router = express.Router();
 const { OAuth2Client } = require("google-auth-library");
 const DB = require("./DB.js");
-
-const SECRET_HASH = "M3rC13STTr0pfUn";
+const jwt = require("./JWT.js");
 
 router.post("/Google", function(req, res) {
   let token = req.body.token;
@@ -22,8 +20,12 @@ router.post("/Google", function(req, res) {
     DB.getUserWithGoogleID(userid)
       .then(result => {
         console.log(result);
-        var token = jwt.sign({ userId: result.userId }, SECRET_HASH);
-        res.send({ code: 202, message: "Connection succeeded !", token });
+        jwt
+          .code({ userId: result.userId })
+          .then(token =>
+            res.send({ code: 202, message: "Connection succeeded !", token })
+          )
+          .catch(err => console.log(err));
       })
       .catch(err => {
         console.log(err);
