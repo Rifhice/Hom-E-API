@@ -4,7 +4,7 @@ module.exports = {
       if (token) {
         resolve();
       } else {
-        res.send({ code: 401 });
+        res.send({ code: 403 });
         reject();
       }
     });

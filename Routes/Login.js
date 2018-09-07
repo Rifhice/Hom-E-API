@@ -23,6 +23,7 @@ router.post("/Google", function(req, res) {
         res.send({ code: 202 });
       })
       .catch(err => {
+        console.log(err);
         res.send({ code: 402 });
         //User not in the database
       });

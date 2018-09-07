@@ -5,9 +5,11 @@ var db = {
 
 var getUserWithGoogleID = userId => {
   return new Promise((resolve, reject) => {
-    for (user of db) {
+    for (user in db) {
       if (db[user].googleId === userId) {
-        resolve(db[user]);
+        let res = { ...db[user] };
+        res.userId = user;
+        resolve(res);
       }
     }
     reject();
