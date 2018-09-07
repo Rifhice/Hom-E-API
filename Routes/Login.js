@@ -4,7 +4,6 @@ const { OAuth2Client } = require("google-auth-library");
 
 router.post("/", function(req, res) {
   let token = req.body.token;
-  console.log(req.body.token);
   const client = new OAuth2Client(
     "466608887201-cs254tau34sd5k7s0kisafitb6boptek.apps.googleusercontent.com"
   );
@@ -22,7 +21,10 @@ router.post("/", function(req, res) {
   }
   verify()
     .then(res => res.send("login"))
-    .catch(err => res.send("error"));
+    .catch(err => {
+      console.log(err);
+      res.send("error");
+    });
 });
 
 module.exports = router;
