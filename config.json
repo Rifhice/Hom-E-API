@@ -1,0 +1,4 @@
+{
+  "REST_PORT": 1337,
+  "SOCKET_IO_PORT": 1336
+}
