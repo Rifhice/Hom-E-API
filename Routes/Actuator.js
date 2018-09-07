@@ -3,7 +3,9 @@ const router = express.Router();
 const RequestFormatter = require("./RequestFormatter");
 const Authentificator = require("./Authentificator");
 
-router.get("/", function(req, res) {});
+router.get("/", function(req, res) {
+  res.send("hey");
+});
 
 router.get("/:id", function(req, res) {});
 
