@@ -7,6 +7,7 @@ const jwt = require("./JWT.js");
 const createTokenAndRespond = (json, res) => {};
 
 router.post("/Google", function(req, res) {
+  //Checking if the google token sent by user is valid
   let token = req.body.token;
   const client = new OAuth2Client(
     "466608887201-cs254tau34sd5k7s0kisafitb6boptek.apps.googleusercontent.com"
@@ -19,9 +20,9 @@ router.post("/Google", function(req, res) {
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];
+    //Look for the user in the database
     DB.getUserWithGoogleID(userid)
       .then(result => {
-        console.log(result);
         jwt
           .code({ userId: result.userId })
           .then(token =>
@@ -30,14 +31,13 @@ router.post("/Google", function(req, res) {
           .catch(err => console.log(err));
       })
       .catch(err => {
-        console.log(err);
         DB.createUser({ googleId: userid })
           .then(id => {
             jwt
               .code({ userId: id })
               .then(token =>
                 res.send({
-                  code: 202,
+                  code: 201,
                   message: "New user created !",
                   token
                 })
@@ -46,7 +46,7 @@ router.post("/Google", function(req, res) {
           })
           .catch(err =>
             res.send({
-              code: 402,
+              code: 500,
               message: "Cannot create the user in the database !"
             })
           );

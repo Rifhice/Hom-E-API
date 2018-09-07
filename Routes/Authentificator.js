@@ -3,6 +3,7 @@ const DB = require("./DB.js");
 
 module.exports = {
   checkAut(token, res) {
+    console.log(token);
     return new Promise((resolve, reject) => {
       jwt
         .decode(token)
