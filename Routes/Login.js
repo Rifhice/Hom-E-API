@@ -16,14 +16,13 @@ router.post("/", function(req, res) {
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];
-    console.log(payload);
+    console.log(userid);
     // If request specified a G Suite domain:
     //const domain = payload['hd'];
   }
   verify()
-    .then(res => console.log(res))
-    .catch(console.error);
-  res.send("login");
+    .then(res => res.send("login"))
+    .catch(res.send("error"));
 });
 
 module.exports = router;
