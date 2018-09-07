@@ -2,6 +2,9 @@ var express = require("express");
 const router = express.Router();
 const { OAuth2Client } = require("google-auth-library");
 const DB = require("./DB.js");
+var jwt = require("jsonwebtoken");
+
+const SECRET_HASH = "M3rC13STTr0pfUn";
 
 router.post("/Google", function(req, res) {
   let token = req.body.token;
@@ -16,11 +19,11 @@ router.post("/Google", function(req, res) {
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];
-    console.log(userid);
     DB.getUserWithGoogleID(userid)
       .then(result => {
         console.log(result);
-        res.send({ code: 202 });
+        var token = jwt.sign({ userId: result.userId }, SECRET_HASH);
+        res.send({ code: 202, message: "Connection succeeded !", token });
       })
       .catch(err => {
         console.log(err);
@@ -29,7 +32,7 @@ router.post("/Google", function(req, res) {
       });
   }
   verify().catch(err => {
-    res.send({ code: 401 });
+    res.send({ code: 401, message: "Google token not valid !" });
   });
 });
 
