@@ -22,7 +22,7 @@ router.post("/", function(req, res) {
   }
   verify()
     .then(res => res.send("login"))
-    .catch(res.send("error"));
+    .catch(err => res.send("error"));
 });
 
 module.exports = router;
