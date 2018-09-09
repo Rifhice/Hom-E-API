@@ -1,5 +1,5 @@
 {
-  "REST_PORT": 1337,
+  "REST_PORT": 1333,
   "DEVICE_SOCKET_IO_PORT": 1336,
   "WEB_SOCKET_IO_PORT": 1338,
   "GOOGLE_APP_ID": "466608887201-cs254tau34sd5k7s0kisafitb6boptek.apps.googleusercontent.com"
