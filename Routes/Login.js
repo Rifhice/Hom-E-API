@@ -1,22 +1,18 @@
 var express = require("express");
 const router = express.Router();
 const { OAuth2Client } = require("google-auth-library");
-const DB = require("./DB.js");
-const jwt = require("./JWT.js");
-
-const createTokenAndRespond = (json, res) => {};
+const DB = require("../DB/DB.js");
+const jwt = require("../Security/JWT");
+const cfg = require("../config.json");
 
 router.post("/Google", function(req, res) {
   //Checking if the google token sent by user is valid
   let token = req.body.token;
-  const client = new OAuth2Client(
-    "466608887201-cs254tau34sd5k7s0kisafitb6boptek.apps.googleusercontent.com"
-  );
+  const client = new OAuth2Client(cfg.GOOGLE_APP_ID);
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience:
-        "466608887201-cs254tau34sd5k7s0kisafitb6boptek.apps.googleusercontent.com"
+      audience: cfg.GOOGLE_APP_ID
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];

@@ -15,7 +15,7 @@ var createUser = user => {
       .then(data => {
         const uuid = guid();
         data[uuid] = user;
-        fs.writeFile("./Routes/DB.json", JSON.stringify(data), err => {
+        fs.writeFile("./DB/DB.json", JSON.stringify(data), err => {
           if (err) reject(err);
           else resolve(uuid);
         });
@@ -26,7 +26,7 @@ var createUser = user => {
 
 var readUsers = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile("./Routes/DB.json", (err, data) => {
+    fs.readFile("./DB/DB.json", (err, data) => {
       if (err) reject(err);
       else resolve(require("./DB.json"));
     });
