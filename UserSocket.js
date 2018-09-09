@@ -1,5 +1,7 @@
 var io = require("socket.io")();
 const Logger = require("./Logger");
+const JWT = require("./Routes/JWT");
+
 global.connectedSockets = {};
 io.on("connection", function(client) {
   Logger("New device connected !");
@@ -24,14 +26,14 @@ io.on("connection", function(client) {
         global.connectedSockets[userId][deviceId] = client;
       else global.connectedSockets[userId] = { [deviceId]: client };
 
-      client.emit("register", { code: 200 });
+      JWT.code({ userId, deviceId })
+        .then(token => client.emit("register", { code: 200, token }))
+        .catch(err => {
+          client.emit("register", { code: 400 });
+        });
     } else {
       client.emit("register", { code: 400 });
     }
-  });
-
-  client.on("register environment_variable", msg => {
-    Logger(`Received ${msg}`);
   });
 });
 

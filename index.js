@@ -16,6 +16,14 @@ app.get("/", function(req, res) {
 app.use(bearerToken());
 app.use(cors());
 app.use(bodyParser.json());
+app.all("*", (req, res, next) => {
+  Logger(
+    `${req.protocol.toUpperCase()} ${req.method} ${req.get("host")}${
+      req.originalUrl
+    } ${req.body}`
+  );
+  next();
+});
 app.use("/", require("./router.js"));
 
 app.listen(REST_PORT, "0.0.0.0", function() {
